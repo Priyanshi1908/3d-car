@@ -31,5 +31,8 @@
     "@threlte/theatre": "^2.1.8",
     "@threlte/xr": "^0.1.4",
     "three": "^0.159.0"
+  },
+  "engines": {
+    "node": "18.x || 20.x"
   }
 }
