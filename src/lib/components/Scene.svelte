@@ -1,60 +1,34 @@
 <script>
-  import { T, useFrame } from '@threlte/core'
+  import { T } from '@threlte/core';
+  import * as THREE from 'three';
+  import { OrbitControls, Environment, Sky } from '@threlte/extras';
+  import Car from '../models/free_ai_based_conceptcar_050_public_domain_cc0.svelte';
+  import Apple from '../models/red_apple.svelte';
 
-  let rotation = 0
-  useFrame(() => {
-    rotation += 0.001
-  })
 </script>
 
-<T.Group rotation.y={rotation}>
-  <T.PerspectiveCamera
-    makeDefault
-    position={[-10, 10, 10]}
-    fov={15}
-    on:create={({ ref }) => {
-      ref.lookAt(0, 1, 0)
-    }}
+<T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={80} near={0.1} far={1000}>
+<OrbitControls
+     autoRotate
+     autoRotateSpeed={1.0}
+     allowPan={false}
+     enableDamping
+     maxDistance={200}
+     minDistance={10}
   />
+</T.PerspectiveCamera>
+
+<Sky />
+
+
+
+<Environment path="/hdr/" format="hdr" isBackground={false} files="metro_noord_4k.hdr" />
+
+<T.Group position={[0, 2, 0]} scale={5}>
+  <Car />
 </T.Group>
 
-<!-- Floor -->
-<T.Mesh rotation.x={(90 * Math.PI) / 180}>
-  <T.CircleGeometry args={[3, 16]} />
-  <T.MeshBasicMaterial
-    color="#666666"
-    wireframe
-  />
-</T.Mesh>
 
-<T.DirectionalLight
-  intensity={0.8}
-  position.x={5}
-  position.y={10}
-/>
-<T.AmbientLight intensity={0.2} />
-
-<T.Mesh
-  position.y={1.2}
-  position.z={-0.75}
->
-  <T.BoxGeometry />
-  <T.MeshStandardMaterial color="#0059BA" />
-</T.Mesh>
-
-<T.Mesh
-  position={[1.2, 1.5, 0.75]}
-  rotation.x={5}
-  rotation.y={71}
->
-  <T.TorusKnotGeometry args={[0.5, 0.15, 100, 12, 2, 3]} />
-  <T.MeshStandardMaterial color="#F85122" />
-</T.Mesh>
-
-<T.Mesh
-  position={[-1.4, 1.5, 0.75]}
-  rotation={[-5, 128, 10]}
->
-  <T.IcosahedronGeometry />
-  <T.MeshStandardMaterial color="#F8EBCE" />
-</T.Mesh>
+<T.Group position={[0, 6.9, 1]} scale={30}>
+  <Apple />
+</T.Group>
